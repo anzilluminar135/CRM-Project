@@ -61,11 +61,23 @@ class StudentsListView(View):
 
         query = request.GET.get('query')
 
-        students = Students.objects.filter(active_status=True)
+        role = request.user.role
 
-        if query :
+        if role in ['Trainer']:
 
-            students = Students.objects.filter(Q(active_status=True)&(Q(first_name__icontains=query)|Q(second_name__icontains=query)|Q(course__name__icontains=query)))
+            students = Students.objects.filter(active_status=True,trainer__profile=request.user)
+
+            if query :
+
+                students = Students.objects.filter(Q(active_status=True)&Q(trainer__profile=request.user)&(Q(first_name__icontains=query)|Q(second_name__icontains=query)|Q(course__name__icontains=query)))
+
+        else:    
+
+            students = Students.objects.filter(active_status=True)
+
+            if query :
+
+                students = Students.objects.filter(Q(active_status=True)&(Q(first_name__icontains=query)|Q(second_name__icontains=query)|Q(course__name__icontains=query)))
 
         # students = Students.objects.all()
 
