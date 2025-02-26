@@ -1,0 +1,8 @@
+orm query
+
+model Students
+
+Students.objects.create(first_name='Ajay')
+
+Read
+
