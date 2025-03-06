@@ -16,13 +16,24 @@ from authentication.permissions import permission_roles
 
 
 
-from .utility import get_admission_number,get_password
+from .utility import get_admission_number,get_password,send_email
 
 from .models import Students
 
 from .forms import StudentRegisterForm
 
 from authentication.models import Profile
+
+import threading
+
+import datetime
+
+# payment related imports
+
+from payments.models import Payment
+
+
+
 
 # Create your views here.
 
@@ -37,7 +48,7 @@ class GetStudentObject:
 
             return student
 
-        except:
+        except Students.DoesNotExist:
 
             return render(request,'errorpages/error-404.html')
 
@@ -98,6 +109,8 @@ class StudentsRegisterView(View):
 
         form = StudentRegisterForm()
 
+        
+
         # data = {'districts':DistrictChoices,'courses':CourseChoices,'batches':BatchChoices,'trainers':TrainerChoices,'form':form}     
         data = {'form':form}     
 
@@ -131,7 +144,35 @@ class StudentsRegisterView(View):
 
                 student.save()
 
-            return redirect('students-list')
+                # payment section
+
+                fee = student.course.offer_fee if student.course.offer_fee else student.course.fee
+
+                Payment.objects.create(student=student,amount=fee)
+                
+                # sending login credentials to student through mail
+
+                subject = 'Login Credentials'
+
+                recepients = [student.email]
+
+                template = 'email/login-credentials.html'
+
+                join_date = student.join_date
+
+                date_after_10_days = join_date + datetime.timedelta(days=10)
+
+
+                context = {'name':f'{student.first_name} {student.second_name}','username':username,'password':password,'date_after_10_days':date_after_10_days}
+
+                
+                # send_email(subject,recepients,template,context)
+
+                thread = threading.Thread(target=send_email,args=(subject,recepients,template,context))
+
+                thread.start()                
+
+                return redirect('students-list')
         
         else:
 

@@ -113,6 +113,8 @@
                                     </svg>
                     </button>
                   </a>
+                  {%check_user_role request 'Admin,Sales' as allow%}
+                  {%if allow%}                
                   <a href="{%url 'student-update' student.uuid%}">
                     <button
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
@@ -149,6 +151,7 @@
                       </svg>
                     </button>
                   </a>
+                  {%endif%}
                 </div>
               </td>
             </tr>

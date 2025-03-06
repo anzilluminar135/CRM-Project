@@ -29,6 +29,8 @@ urlpatterns = [
     path('',include('authentication.urls')),
 
     path('recordings/',include('recordings.urls')),
+
+    path('payments/',include('payments.urls')),
 ]
 
 
