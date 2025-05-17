@@ -96,10 +96,10 @@ DATABASES = {
     
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'crm_db',
-        'USER': 'crmadmin',
-        'PASSWORD': 'crmadmin@2024',
-        'HOST':'localhost',
+        'NAME': config('NAME'),
+        'USER': config('USER'),
+        'PASSWORD': config('PASSWORD'),
+        'HOST':config('HOST'),
         'PORT':'3306',
     }
 }
