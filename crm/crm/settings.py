@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-t_u1^$fvl!(#v_jb4^ua!alpkqg(g87385f^r=2#c^sp-km&l1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['anzilnazer.pythonanywhere.com']
+ALLOWED_HOSTS = ['crmanzil2025.pythonanywhere.com']
 
 
 # Application definition
@@ -67,7 +67,7 @@ ROOT_URLCONF = 'crm.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
