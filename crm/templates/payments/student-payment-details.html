@@ -9,6 +9,8 @@
         <div class="mt-4">
             <h2 class="font-bold font-medium text-gray-700 dark:text-gray-400">Payment Details</h2>
         </div>
+
+        {%if payment.status == 'Pending'%}
       
       <div class="mt-4">
         <a href="{%url 'razorpay-view'%}" class="px-5 py-3 font-medium leading-5 
@@ -16,7 +18,15 @@
                           rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none 
                           focus:shadow-outline-purple">Pay Now</a>
       </div>
+
+        {%elif payment.status == 'Success'%}
+      
+      <div class="mt-4">
+        <h3 >Status:<span style="background-color: greenyellow; color: white;">Paid</span></h3>
+      </div>
+      {%endif%}
     </div>
+    {%if payment.status == 'Success'%}
     <div class="flex items-center space-x-6 my-6">
       <span class="font-medium text-gray-700 dark:text-gray-400">Amount:</span>
       <span class="text-gray-600">{{payment.amount}}</span>
@@ -35,8 +45,9 @@
     </div>
     <div class="flex items-center space-x-6 my-6">
       <span class="font-medium text-gray-700 dark:text-gray-400">Order ID:</span>
-      <span class="text-gray-600"></span>
+      <span class="text-gray-600">{{order_id}}</span>
     </div>
+    {%endif%}
       </div>
     </div>
   </main>
